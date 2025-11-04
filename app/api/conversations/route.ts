@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
         
         // Handle cases where knowledgeBaseId might be null or deleted
         const knowledgeBase = conv.knowledgeBaseId ? {
-          id: (conv.knowledgeBaseId as any)._id.toString(),
+          id: String((conv.knowledgeBaseId as any)._id),
           name: (conv.knowledgeBaseId as any).name,
         } : {
           id: '',
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
         };
         
         return {
-          id: conv._id.toString(),
+          id: String(conv._id),
           title: conv.title,
           avatarId: conv.avatarId,
           voiceId: conv.voiceId,
@@ -98,12 +98,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       conversation: {
-        id: conversation._id.toString(),
+        id: String(conversation._id),
         title: conversation.title,
         avatarId: conversation.avatarId,
         voiceId: conversation.voiceId,
         language: conversation.language,
-        knowledgeBaseId: conversation.knowledgeBaseId.toString(),
+        knowledgeBaseId: String(conversation.knowledgeBaseId),
         status: conversation.status,
         createdAt: conversation.createdAt,
         lastMessageAt: conversation.lastMessageAt,

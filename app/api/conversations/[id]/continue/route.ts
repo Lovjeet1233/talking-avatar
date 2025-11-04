@@ -60,13 +60,13 @@ export async function POST(
     return NextResponse.json({
       success: true,
       conversation: {
-        id: conversation._id.toString(),
+        id: conversation)._id),
         title: conversation.title,
         avatarId: conversation.avatarId,
         voiceId: conversation.voiceId,
         language: conversation.language || 'en',
         knowledgeBase: {
-          id: knowledgeBase._id.toString(),
+          id: knowledgeBase)._id),
           name: knowledgeBase.name,
           prompt: knowledgeBase.prompt,
         },
@@ -74,7 +74,7 @@ export async function POST(
         status: conversation.status,
       },
       messages: messages.map(msg => ({
-        id: msg._id.toString(),
+        id: msg)._id),
         role: msg.role,
         content: msg.content,
         timestamp: msg.timestamp,

@@ -32,7 +32,7 @@ export async function GET(
     
     // Handle cases where knowledgeBaseId might be null or deleted
     const knowledgeBase = conversation.knowledgeBaseId ? {
-      id: (conversation.knowledgeBaseId as any)._id.toString(),
+      id: String((conversation.knowledgeBaseId as any)._id),
       name: (conversation.knowledgeBaseId as any).name,
       welcomeMessage: (conversation.knowledgeBaseId as any).welcomeMessage,
       prompt: (conversation.knowledgeBaseId as any).prompt,
@@ -46,7 +46,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       conversation: {
-        id: conversation._id.toString(),
+        id: String(conversation._id),
         title: conversation.title,
         avatarId: conversation.avatarId,
         voiceId: conversation.voiceId,
@@ -56,7 +56,7 @@ export async function GET(
         createdAt: conversation.createdAt,
         lastMessageAt: conversation.lastMessageAt,
         messages: messages.map(msg => ({
-          id: msg._id.toString(),
+          id: String(msg._id),
           role: msg.role,
           content: msg.content,
           timestamp: msg.timestamp,

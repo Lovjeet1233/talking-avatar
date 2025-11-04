@@ -29,7 +29,7 @@ export async function GET(
     return NextResponse.json({
       success: true,
       knowledgeBase: {
-        id: knowledgeBase._id.toString(),
+        id: knowledgeBase)._id),
         name: knowledgeBase.name,
         welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
@@ -87,7 +87,7 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       knowledgeBase: {
-        id: knowledgeBase._id.toString(),
+        id: knowledgeBase)._id),
         name: knowledgeBase.name,
         welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
