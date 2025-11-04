@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "MONGODB_URI": "@mongodb_uri",
+    "JWT_SECRET": "@jwt_secret",
+    "HEYGEN_API_KEY": "@heygen_api_key",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "NEXT_PUBLIC_HEYGEN_API_KEY": "@heygen_api_key"
+  }
+}
+
