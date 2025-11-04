@@ -1,6 +1,6 @@
-import mongoose, { Schema, Model } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-export interface IConversation {
+export interface IConversation extends Document {
   userId: mongoose.Types.ObjectId;
   avatarId: string;
   voiceId?: string;
@@ -62,8 +62,5 @@ const ConversationSchema = new Schema<IConversation>({
   },
 });
 
-const Conversation: Model<IConversation> = 
-  mongoose.models.Conversation || mongoose.model<IConversation>('Conversation', ConversationSchema);
-
-export default Conversation;
+export default (mongoose.models.Conversation as Model<IConversation>) || mongoose.model<IConversation>('Conversation', ConversationSchema);
 

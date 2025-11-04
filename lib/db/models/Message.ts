@@ -1,6 +1,6 @@
-import mongoose, { Schema, Model } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-export interface IMessage {
+export interface IMessage extends Document {
   conversationId: mongoose.Types.ObjectId;
   role: 'user' | 'assistant';
   content: string;
@@ -28,8 +28,5 @@ const MessageSchema = new Schema<IMessage>({
   },
 });
 
-const Message: Model<IMessage> = 
-  mongoose.models.Message || mongoose.model<IMessage>('Message', MessageSchema);
-
-export default Message;
+export default (mongoose.models.Message as Model<IMessage>) || mongoose.model<IMessage>('Message', MessageSchema);
 

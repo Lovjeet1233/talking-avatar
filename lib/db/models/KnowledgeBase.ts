@@ -1,6 +1,6 @@
-import mongoose, { Schema, Model } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-export interface IKnowledgeBase {
+export interface IKnowledgeBase extends Document {
   userId: mongoose.Types.ObjectId;
   name: string;
   welcomeMessage: string;
@@ -37,8 +37,5 @@ const KnowledgeBaseSchema = new Schema<IKnowledgeBase>({
   },
 });
 
-const KnowledgeBase: Model<IKnowledgeBase> = 
-  mongoose.models.KnowledgeBase || mongoose.model<IKnowledgeBase>('KnowledgeBase', KnowledgeBaseSchema);
-
-export default KnowledgeBase;
+export default (mongoose.models.KnowledgeBase as Model<IKnowledgeBase>) || mongoose.model<IKnowledgeBase>('KnowledgeBase', KnowledgeBaseSchema);
 
