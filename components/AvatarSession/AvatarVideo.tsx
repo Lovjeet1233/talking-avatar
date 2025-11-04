@@ -32,6 +32,7 @@ export const AvatarVideo = forwardRef<HTMLVideoElement>(({}, ref) => {
         ref={ref}
         autoPlay
         playsInline
+        muted={false}
         style={{
           width: "100%",
           height: "100%",
