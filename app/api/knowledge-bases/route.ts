@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       success: true,
       knowledgeBases: knowledgeBases.map(kb => ({
-        id: kb)._id),
+        id: String(kb._id),
         name: kb.name,
         welcomeMessage: kb.welcomeMessage,
         prompt: kb.prompt,
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       knowledgeBase: {
-        id: knowledgeBase)._id),
+        id: String(knowledgeBase._id),
         name: knowledgeBase.name,
         welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,

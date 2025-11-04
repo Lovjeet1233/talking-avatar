@@ -50,7 +50,7 @@ export async function POST(
     return NextResponse.json({
       success: true,
       message: {
-        id: message)._id),
+        id: String(message._id),
         role: message.role,
         content: message.content,
         timestamp: message.timestamp,

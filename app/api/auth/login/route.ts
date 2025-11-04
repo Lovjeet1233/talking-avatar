@@ -25,14 +25,14 @@ export async function POST(request: NextRequest) {
       
       // Generate JWT token
       const token = generateToken({
-        userId: adminUser)._id),
+        userId: String(adminUser._id),
         username: adminUser.username,
       });
       
       const response = NextResponse.json({
         success: true,
         user: {
-          id: adminUser)._id),
+          id: String(adminUser._id),
           username: adminUser.username,
         },
       });
@@ -68,14 +68,14 @@ export async function POST(request: NextRequest) {
     }
     
     const token = generateToken({
-      userId: user)._id),
+      userId: String(user._id),
       username: user.username,
     });
     
     const response = NextResponse.json({
       success: true,
       user: {
-        id: user)._id),
+        id: String(user._id),
         username: user.username,
       },
     });

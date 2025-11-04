@@ -60,25 +60,25 @@ export async function POST(
     return NextResponse.json({
       success: true,
       conversation: {
-        id: conversation)._id),
+        id: String(conversation._id),
         title: conversation.title,
         avatarId: conversation.avatarId,
         voiceId: conversation.voiceId,
         language: conversation.language || 'en',
         knowledgeBase: {
-          id: knowledgeBase)._id),
+          id: String(knowledgeBase._id),
           name: knowledgeBase.name,
           prompt: knowledgeBase.prompt,
         },
         sessionContext: sessionContext,
         status: conversation.status,
       },
-      messages: messages.map(msg => ({
-        id: msg)._id),
-        role: msg.role,
-        content: msg.content,
-        timestamp: msg.timestamp,
-      })),
+        messages: messages.map(msg => ({
+          id: String(msg._id),
+          role: msg.role,
+          content: msg.content,
+          timestamp: msg.timestamp,
+        })),
       conversationSummary: conversationSummary,
     });
   } catch (error) {
