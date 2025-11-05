@@ -679,7 +679,7 @@ function ChatInteractiveAvatar({
 
         {/* Controls Overlay */}
         {sessionState === StreamingAvatarSessionState.CONNECTED && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent backdrop-blur-sm p-6">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
             <div className="flex items-center justify-center space-x-3">
               {/* Audio Status */}
               <div className={`px-3 py-1.5 rounded-full text-xs font-medium ${audioEnabled ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>

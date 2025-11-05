@@ -1,11 +1,29 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [userRole, setUserRole] = useState<string>('user');
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch('/api/auth/me');
+      const data = await response.json();
+      if (data.success && data.user) {
+        setUserRole(data.user.role);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user info:', error);
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -21,6 +39,14 @@ export default function Sidebar() {
     { href: '/dashboard/chats', label: 'My Sessions' },
     { href: '/dashboard/knowledge-bases', label: 'Knowledge Base' },
   ];
+
+  // Add admin menu items for admin users
+  if (userRole === 'admin') {
+    navItems.push(
+      { href: '/dashboard/admin', label: 'Admin Dashboard' },
+      { href: '/dashboard/admin/users', label: 'User Management' }
+    );
+  }
 
   return (
     <div className="fixed left-0 top-0 h-full w-72 bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col shadow-2xl">

@@ -16,6 +16,7 @@
     "ahooks": "^3.8.4",
     "bcryptjs": "^3.0.3",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.20.0",
     "mongoose": "^8.19.2",

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/mongodb';
 import Conversation from '@/lib/db/models/Conversation';
 import Message from '@/lib/db/models/Message';
+import User from '@/lib/db/models/User';
 import { requireAuth } from '@/lib/auth/middleware';
 
 // GET single conversation with messages
@@ -10,15 +11,21 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const user = requireAuth(request);
+    const authUser = requireAuth(request);
     await connectDB();
     
     const { id } = await params;
     
-    const conversation = await Conversation.findOne({
-      _id: id,
-      userId: user.userId,
-    }).populate('knowledgeBaseId');
+    // Get full user details to check role
+    const user = await User.findById(authUser.userId);
+    
+    // Build query - admin can see all conversations, regular users only their own
+    const query: any = { _id: id };
+    if (user?.role !== 'admin') {
+      query.userId = authUser.userId;
+    }
+    
+    const conversation = await Conversation.findOne(query).populate('knowledgeBaseId');
     
     if (!conversation) {
       return NextResponse.json(

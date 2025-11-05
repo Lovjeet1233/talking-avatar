@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
@@ -94,7 +95,10 @@ export default function LoginPage() {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Default credentials: <span className="font-medium text-black">admin / admin123</span>
+            Don't have an account?{' '}
+            <Link href="/register" className="font-medium text-black hover:underline">
+              Register here
+            </Link>
           </p>
         </div>
       </div>

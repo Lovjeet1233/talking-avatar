@@ -54,9 +54,9 @@ export default function DashboardPage() {
       <div className="mb-12">
         <button
           onClick={() => setShowStartChatModal(true)}
-          className="w-full max-w-md mx-auto block bg-black text-white py-6 px-8 text-xl font-medium hover:bg-gray-800 transition-colors"
+          className="w-full max-w-md mx-auto block bg-gradient-to-r from-blue-500 to-blue-600 text-white py-6 px-8 rounded-2xl text-xl font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98]"
         >
-          Start New Chat
+          ✨ Start New Chat
         </button>
       </div>
 
@@ -183,10 +183,10 @@ function StartChatModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white border-[1.5px] border-black max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b-[1.5px] border-black flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-black">Start New Chat</h2>
-          <button onClick={onClose} className="text-2xl hover:text-gray-600">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+        <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-gradient-to-r from-blue-50 to-indigo-50">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Start New Chat</h2>
+          <button onClick={onClose} className="text-2xl text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-all">
             ×
           </button>
         </div>
@@ -303,19 +303,19 @@ function StartChatModal({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <div className="p-6 border-t-[1.5px] border-black flex space-x-4">
+        <div className="p-6 border-t-[1.5px] border-gray-200 flex space-x-4">
           <button
             onClick={onClose}
-            className="flex-1 py-3 border-[1.5px] border-black text-black font-medium hover:bg-gray-100 transition-colors"
+            className="flex-1 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-all"
           >
             Cancel
           </button>
           <button
             onClick={handleStartChat}
             disabled={loading || !formData.avatarId || !formData.knowledgeBaseId}
-            className="flex-1 py-3 bg-black text-white font-medium hover:bg-gray-800 transition-colors disabled:bg-gray-400"
+            className="flex-1 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg disabled:from-gray-400 disabled:to-gray-400 disabled:cursor-not-allowed"
           >
-            {loading ? 'Starting...' : 'Start Chat'}
+            {loading ? 'Starting...' : '✨ Start Chat'}
           </button>
         </div>
       </div>
