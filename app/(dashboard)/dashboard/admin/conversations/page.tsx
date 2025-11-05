@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 interface Conversation {
@@ -22,7 +22,7 @@ interface Conversation {
   } | null;
 }
 
-export default function AdminConversationsPage() {
+function AdminConversationsContent() {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -168,6 +168,18 @@ export default function AdminConversationsPage() {
         Total Conversations: {conversations.length}
       </div>
     </div>
+  );
+}
+
+export default function AdminConversationsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-screen">
+        <div className="h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <AdminConversationsContent />
+    </Suspense>
   );
 }
 

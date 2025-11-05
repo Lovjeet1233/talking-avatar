@@ -7,12 +7,13 @@ import bcrypt from 'bcryptjs';
 // PUT reset user password
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
+    const { id } = await params;
     const body = await request.json();
     const { newPassword } = body;
     
@@ -31,7 +32,7 @@ export async function PUT(
       );
     }
     
-    const user = await User.findById(params.id);
+    const user = await User.findById(id);
     
     if (!user) {
       return NextResponse.json(

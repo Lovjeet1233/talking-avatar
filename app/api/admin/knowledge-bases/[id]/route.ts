@@ -6,12 +6,13 @@ import { requireAdmin } from '@/lib/auth/adminMiddleware';
 // PUT update knowledge base (admin can edit any user's KB)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
+    const { id } = await params;
     const body = await request.json();
     const { name, welcomeMessage, prompt } = body;
     
@@ -23,7 +24,7 @@ export async function PUT(
       );
     }
     
-    const knowledgeBase = await KnowledgeBase.findById(params.id);
+    const knowledgeBase = await KnowledgeBase.findById(id);
     
     if (!knowledgeBase) {
       return NextResponse.json(
@@ -70,13 +71,14 @@ export async function PUT(
 // DELETE knowledge base
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
-    const knowledgeBase = await KnowledgeBase.findById(params.id);
+    const { id } = await params;
+    const knowledgeBase = await KnowledgeBase.findById(id);
     
     if (!knowledgeBase) {
       return NextResponse.json(
@@ -85,7 +87,7 @@ export async function DELETE(
       );
     }
     
-    await KnowledgeBase.findByIdAndDelete(params.id);
+    await KnowledgeBase.findByIdAndDelete(id);
     
     return NextResponse.json({
       success: true,

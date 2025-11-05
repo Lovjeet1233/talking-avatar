@@ -7,14 +7,16 @@ import { requireAdmin } from '@/lib/auth/adminMiddleware';
 // GET user's knowledge bases
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
+    const { id } = await params;
+    
     // Verify user exists
-    const user = await User.findById(params.id);
+    const user = await User.findById(id);
     if (!user) {
       return NextResponse.json(
         { success: false, message: 'User not found' },
@@ -23,7 +25,7 @@ export async function GET(
     }
     
     // Get user's knowledge bases
-    const knowledgeBases = await KnowledgeBase.find({ userId: params.id })
+    const knowledgeBases = await KnowledgeBase.find({ userId: id })
       .sort({ createdAt: -1 });
     
     const kbsFormatted = knowledgeBases.map(kb => ({

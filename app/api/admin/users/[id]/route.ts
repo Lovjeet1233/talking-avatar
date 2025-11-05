@@ -9,13 +9,14 @@ import { requireAdmin } from '@/lib/auth/adminMiddleware';
 // GET single user details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
-    const user = await User.findById(params.id).select('-password');
+    const { id } = await params;
+    const user = await User.findById(id).select('-password');
     
     if (!user) {
       return NextResponse.json(
@@ -26,11 +27,11 @@ export async function GET(
     
     // Get user statistics
     const [conversationCount, knowledgeBaseCount, messageCount] = await Promise.all([
-      Conversation.countDocuments({ userId: params.id }),
-      KnowledgeBase.countDocuments({ userId: params.id }),
+      Conversation.countDocuments({ userId: id }),
+      KnowledgeBase.countDocuments({ userId: id }),
       Message.countDocuments({ 
         conversationId: { 
-          $in: await Conversation.find({ userId: params.id }).distinct('_id') 
+          $in: await Conversation.find({ userId: id }).distinct('_id') 
         } 
       }),
     ]);
@@ -70,16 +71,17 @@ export async function GET(
 // PATCH update user status
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
+    const { id } = await params;
     const body = await request.json();
     const { isActive } = body;
     
-    const user = await User.findById(params.id);
+    const user = await User.findById(id);
     
     if (!user) {
       return NextResponse.json(
@@ -123,13 +125,14 @@ export async function PATCH(
 // DELETE user
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await requireAdmin(request);
     await connectDB();
     
-    const user = await User.findById(params.id);
+    const { id } = await params;
+    const user = await User.findById(id);
     
     if (!user) {
       return NextResponse.json(
@@ -147,15 +150,15 @@ export async function DELETE(
     }
     
     // Get all conversations for this user
-    const conversations = await Conversation.find({ userId: params.id });
+    const conversations = await Conversation.find({ userId: id });
     const conversationIds = conversations.map(c => c._id);
     
     // Delete all related data
     await Promise.all([
       Message.deleteMany({ conversationId: { $in: conversationIds } }),
-      Conversation.deleteMany({ userId: params.id }),
-      KnowledgeBase.deleteMany({ userId: params.id }),
-      User.findByIdAndDelete(params.id),
+      Conversation.deleteMany({ userId: id }),
+      KnowledgeBase.deleteMany({ userId: id }),
+      User.findByIdAndDelete(id),
     ]);
     
     return NextResponse.json({
