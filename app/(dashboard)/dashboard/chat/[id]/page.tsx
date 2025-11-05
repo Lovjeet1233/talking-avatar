@@ -641,7 +641,7 @@ function ChatInteractiveAvatar({
                     muted
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-xs text-white font-medium">
+                  <div className="absolute bottom-2 left-2 bg-black/80 px-2 py-1 rounded text-xs text-white font-medium">
                     You
                   </div>
                 </div>
@@ -655,7 +655,7 @@ function ChatInteractiveAvatar({
                     >
                       Enable Audio
                     </button>
-                    <p className="text-white text-sm text-center mt-3 bg-black/60 backdrop-blur-sm px-4 py-2 rounded-lg">
+                    <p className="text-white text-sm text-center mt-3 bg-black/80 px-4 py-2 rounded-lg">
                       Click to hear the avatar speak
                     </p>
                   </div>
@@ -679,11 +679,11 @@ function ChatInteractiveAvatar({
 
         {/* Controls Overlay */}
         {sessionState === StreamingAvatarSessionState.CONNECTED && (
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6">
+          <div className="absolute bottom-4 left-0 right-0 px-6">
             <div className="flex items-center justify-center space-x-3">
               {/* Audio Status */}
-              <div className={`px-3 py-1.5 rounded-full text-xs font-medium ${audioEnabled ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                {audioEnabled ? 'Audio Active' : 'Audio Disabled'}
+              <div className={`px-4 py-2 rounded-lg text-sm font-medium shadow-lg ${audioEnabled ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}`}>
+                {audioEnabled ? '🎤 Audio Active' : '🔇 Audio Disabled'}
               </div>
               <AvatarControls />
             </div>
