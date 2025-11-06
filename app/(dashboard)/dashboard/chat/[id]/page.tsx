@@ -36,7 +36,6 @@ interface Conversation {
   knowledgeBase: {
     id: string;
     name: string;
-    welcomeMessage?: string;
     prompt: string;
   };
   status: string;
@@ -234,6 +233,7 @@ function ChatInterface({
   onMessageSent: (message: string, role: 'user' | 'assistant') => void;
 }) {
   const [messages, setMessages] = useState(conversation.messages);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -248,7 +248,7 @@ function ChatInterface({
   return (
     <div className="h-full flex">
       {/* Avatar Video Section - Left Side */}
-      <div className="w-2/3 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center relative">
+      <div className={`${isFullScreen ? 'w-full' : 'w-2/3'} bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center relative transition-all duration-300`}>
         <InteractiveAvatarWrapper
           conversation={conversation}
           onMessageReceived={(message) => {
@@ -276,10 +276,29 @@ function ChatInterface({
             ]);
           }}
         />
+        
+        {/* Expand/Collapse Button */}
+        <button
+          onClick={() => setIsFullScreen(!isFullScreen)}
+          className="absolute top-3 right-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white p-3 rounded-lg transition-all shadow-lg z-10"
+          title={isFullScreen ? 'Show Chat' : 'Hide Chat'}
+        >
+          {isFullScreen ? (
+            // Collapse icon (show chat)
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          ) : (
+            // Expand icon (hide chat)
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+          )}
+        </button>
       </div>
 
       {/* Messages History Section - Right Side */}
-      <div className="w-1/3 bg-white flex flex-col border-l border-gray-200 shadow-xl">
+      <div className={`${isFullScreen ? 'hidden' : 'w-1/3'} bg-white flex flex-col border-l border-gray-200 shadow-xl transition-all duration-300`}>
         <div className="p-6 border-b border-gray-200 bg-gray-50">
           <h3 className="text-lg font-semibold text-gray-900">Conversation</h3>
           <p className="text-sm text-gray-500 mt-1">

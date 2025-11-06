@@ -31,7 +31,6 @@ export async function GET(
     const kbsFormatted = knowledgeBases.map(kb => ({
       id: String(kb._id),
       name: kb.name,
-      welcomeMessage: kb.welcomeMessage,
       prompt: kb.prompt,
       createdAt: kb.createdAt,
       updatedAt: kb.updatedAt,

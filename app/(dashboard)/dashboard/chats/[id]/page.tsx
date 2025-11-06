@@ -17,7 +17,6 @@ interface Conversation {
   knowledgeBase: {
     id: string;
     name: string;
-    welcomeMessage: string;
     prompt: string;
   };
   status: string;
@@ -225,10 +224,6 @@ ${msg.content}
       <div className="mt-6 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Knowledge Base Details</h3>
         <div className="space-y-4">
-          <div>
-            <p className="text-sm font-medium text-gray-500 mb-2">Welcome Message</p>
-            <p className="text-gray-900 leading-relaxed">{conversation.knowledgeBase.welcomeMessage}</p>
-          </div>
           <div>
             <p className="text-sm font-medium text-gray-500 mb-2">System Prompt</p>
             <pre className="text-sm text-gray-900 bg-gray-50 p-4 rounded-lg border border-gray-200 whitespace-pre-wrap font-mono">

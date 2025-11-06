@@ -31,7 +31,6 @@ export async function GET(
       knowledgeBase: {
         id: String(knowledgeBase._id),
         name: knowledgeBase.name,
-        welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
         createdAt: knowledgeBase.createdAt,
         updatedAt: knowledgeBase.updatedAt,
@@ -64,13 +63,12 @@ export async function PUT(
     await connectDB();
     
     const { id } = await params;
-    const { name, welcomeMessage, prompt } = await request.json();
+    const { name, prompt } = await request.json();
     
     const knowledgeBase = await KnowledgeBase.findOneAndUpdate(
       { _id: id, userId: user.userId },
       {
         ...(name && { name }),
-        ...(welcomeMessage && { welcomeMessage }),
         ...(prompt && { prompt }),
         updatedAt: new Date(),
       },
@@ -89,7 +87,6 @@ export async function PUT(
       knowledgeBase: {
         id: String(knowledgeBase._id),
         name: knowledgeBase.name,
-        welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
         createdAt: knowledgeBase.createdAt,
         updatedAt: knowledgeBase.updatedAt,

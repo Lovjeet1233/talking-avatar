@@ -3,7 +3,6 @@ import mongoose, { Schema, Model, Document } from 'mongoose';
 export interface IKnowledgeBase extends Document {
   userId: mongoose.Types.ObjectId;
   name: string;
-  welcomeMessage: string;
   prompt: string;
   createdAt: Date;
   updatedAt: Date;
@@ -16,10 +15,6 @@ const KnowledgeBaseSchema = new Schema<IKnowledgeBase>({
     required: true,
   },
   name: {
-    type: String,
-    required: true,
-  },
-  welcomeMessage: {
     type: String,
     required: true,
   },

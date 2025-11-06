@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 interface KnowledgeBase {
   id: string;
   name: string;
-  welcomeMessage: string;
   prompt: string;
   createdAt: string;
   updatedAt: string;
@@ -88,9 +87,6 @@ export default function KnowledgeBasesPage() {
               className="border-[1.5px] border-gray-300 p-6 hover:border-black transition-colors"
             >
               <h3 className="text-xl font-bold text-black mb-2">{kb.name}</h3>
-              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                {kb.welcomeMessage}
-              </p>
               <div className="mb-4">
                 <p className="text-xs text-gray-500 mb-1">System Prompt Preview:</p>
                 <p className="text-sm text-black line-clamp-3">{kb.prompt}</p>
@@ -148,13 +144,12 @@ function KnowledgeBaseModal({
 }) {
   const [formData, setFormData] = useState({
     name: knowledgeBase?.name || '',
-    welcomeMessage: knowledgeBase?.welcomeMessage || '',
     prompt: knowledgeBase?.prompt || '',
   });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    if (!formData.name || !formData.welcomeMessage || !formData.prompt) {
+    if (!formData.name || !formData.prompt) {
       alert('Please fill in all fields');
       return;
     }
@@ -209,21 +204,6 @@ function KnowledgeBaseModal({
               placeholder="e.g., Business Advisor"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-3 border-[1.5px] border-gray-300 focus:border-black focus:outline-none text-black"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              Welcome Message <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              placeholder="e.g., Hi! How can I help you today?"
-              value={formData.welcomeMessage}
-              onChange={(e) =>
-                setFormData({ ...formData, welcomeMessage: e.target.value })
-              }
               className="w-full px-4 py-3 border-[1.5px] border-gray-300 focus:border-black focus:outline-none text-black"
             />
           </div>

@@ -17,7 +17,6 @@ export async function GET(request: NextRequest) {
       knowledgeBases: knowledgeBases.map(kb => ({
         id: String(kb._id),
         name: kb.name,
-        welcomeMessage: kb.welcomeMessage,
         prompt: kb.prompt,
         createdAt: kb.createdAt,
         updatedAt: kb.updatedAt,
@@ -46,9 +45,9 @@ export async function POST(request: NextRequest) {
     const user = requireAuth(request);
     await connectDB();
     
-    const { name, welcomeMessage, prompt } = await request.json();
+    const { name, prompt } = await request.json();
     
-    if (!name || !welcomeMessage || !prompt) {
+    if (!name || !prompt) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 }
@@ -58,7 +57,6 @@ export async function POST(request: NextRequest) {
     const knowledgeBase = await KnowledgeBase.create({
       userId: user.userId,
       name,
-      welcomeMessage,
       prompt,
     });
     
@@ -67,7 +65,6 @@ export async function POST(request: NextRequest) {
       knowledgeBase: {
         id: String(knowledgeBase._id),
         name: knowledgeBase.name,
-        welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
         createdAt: knowledgeBase.createdAt,
         updatedAt: knowledgeBase.updatedAt,

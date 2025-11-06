@@ -14,12 +14,12 @@ export async function PUT(
     
     const { id } = await params;
     const body = await request.json();
-    const { name, welcomeMessage, prompt } = body;
+    const { name, prompt } = body;
     
     // Validation
-    if (!name || !welcomeMessage || !prompt) {
+    if (!name || !prompt) {
       return NextResponse.json(
-        { success: false, message: 'Name, welcome message, and prompt are required' },
+        { success: false, message: 'Name and prompt are required' },
         { status: 400 }
       );
     }
@@ -35,7 +35,6 @@ export async function PUT(
     
     // Update knowledge base
     knowledgeBase.name = name;
-    knowledgeBase.welcomeMessage = welcomeMessage;
     knowledgeBase.prompt = prompt;
     knowledgeBase.updatedAt = new Date();
     await knowledgeBase.save();
@@ -46,7 +45,6 @@ export async function PUT(
       knowledgeBase: {
         id: String(knowledgeBase._id),
         name: knowledgeBase.name,
-        welcomeMessage: knowledgeBase.welcomeMessage,
         prompt: knowledgeBase.prompt,
         updatedAt: knowledgeBase.updatedAt,
       },

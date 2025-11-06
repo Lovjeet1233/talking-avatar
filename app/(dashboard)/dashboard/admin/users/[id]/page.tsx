@@ -19,7 +19,6 @@ interface UserDetails {
 interface KnowledgeBase {
   id: string;
   name: string;
-  welcomeMessage: string;
   prompt: string;
   createdAt: string;
   updatedAt: string;
@@ -54,7 +53,6 @@ export default function UserDetailsPage() {
   const [showEditKBModal, setShowEditKBModal] = useState(false);
   const [selectedKB, setSelectedKB] = useState<KnowledgeBase | null>(null);
   const [editKBName, setEditKBName] = useState('');
-  const [editKBWelcome, setEditKBWelcome] = useState('');
   const [editKBPrompt, setEditKBPrompt] = useState('');
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState('');
@@ -114,7 +112,6 @@ export default function UserDetailsPage() {
   const openEditKBModal = (kb: KnowledgeBase) => {
     setSelectedKB(kb);
     setEditKBName(kb.name);
-    setEditKBWelcome(kb.welcomeMessage);
     setEditKBPrompt(kb.prompt);
     setShowEditKBModal(true);
     setError('');
@@ -133,7 +130,6 @@ export default function UserDetailsPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: editKBName,
-          welcomeMessage: editKBWelcome,
           prompt: editKBPrompt,
         }),
       });
@@ -351,9 +347,6 @@ export default function UserDetailsPage() {
                       <div className="flex justify-between items-start mb-3">
                         <div className="flex-1">
                           <h4 className="text-lg font-semibold text-gray-900 mb-2">{kb.name}</h4>
-                          <p className="text-gray-600 text-sm mb-2">
-                            <strong>Welcome Message:</strong> {kb.welcomeMessage}
-                          </p>
                           <p className="text-gray-600 text-sm">
                             <strong>System Prompt:</strong> {kb.prompt.substring(0, 150)}
                             {kb.prompt.length > 150 && '...'}
@@ -469,24 +462,12 @@ export default function UserDetailsPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Welcome Message *
-                  </label>
-                  <textarea
-                    value={editKBWelcome}
-                    onChange={(e) => setEditKBWelcome(e.target.value)}
-                    rows={3}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
                     System Prompt *
                   </label>
                   <textarea
                     value={editKBPrompt}
                     onChange={(e) => setEditKBPrompt(e.target.value)}
-                    rows={6}
+                    rows={10}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     required
                   />
